@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <script type="text/javascript" src="assets/js/angular.min.js"></script>
+		<script type="text/javascript" src="assets/js/app.js"></script>  
+        <script type="text/javascript" src="assets/js/controller/mainController.js"></script>         
+    </head>
+    <style>
+        .booked{
+            border-color: grey;
+            background-color: grey;
+            border-style:solid;
+            margin:2px;
+            color:white;
+            text-align: center;
+        }
+        .unbooked{
+            background-color:green;
+            border-color:white;
+            color:white;
+            border-style:solid;
+            margin:2px;
+            text-align:center;
+        }
+        .table{
+            margin-top:10px;
+        }
+        
+        
+        
+    </style>
+    <body ng-app="myApp" ng-controller="mainController">
+        <div class="container">
+            <div class="row">
+                <h1 class="text-center">Movie Seat Reservation</h1>
+            </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Enter the Name" ng-model="name" ng-disabled="showTickets==true">
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" ng-model="total" ng-disabled="showTickets==true">
+                    <option selected disabled>Select Number of Seats</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger" ng-click="book()" ng-disabled="showTickets==true">Select the seats</button>
+            </div>            
+        </div>
+        
+        <div class="row" ng-if="showTickets==true">
+            <div class="col-md-2" ng-repeat="seat in seats" ng-class="{booked:seat.status==true ,unbooked:seat.status==false}" 
+             ng-click="seat.available==true? errorAlert(seat) : falseAlert() ">
+                {{seat.value}}{{seat.number}}
+            </div>
+            <div class="col-md-1"></div>
+            
+        </div>
+        <div class="row text-center" ng-if="showTickets==true">
+            
+               
+                <button class="btn btn-primary" ng-click="setSeatStatus()">BookTickets</button>
+            
+        </div>
+        <div class="row">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>No of seats</td>
+                        <td>Booked Seats</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="details in bookedDetails">
+                        <td>{{details.name}}</td>
+                        <td>{{details.tickets}}</td>
+                        <td>{{details.seatno}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </body> 
+</html
